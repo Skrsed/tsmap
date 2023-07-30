@@ -1,37 +1,40 @@
-import {
-  MapContainer,
-  Marker,
-  TileLayer,
-  Popup
-} from 'react-leaflet'
+import { MapContainer, TileLayer } from 'react-leaflet'
 import 'leaflet/dist/leaflet.css'
 import RouteLine from './RouteLine'
-import routes from '../mocha/routes.tsx'
+import MoveCenter from './MoveCenter'
+import { useAppSelector } from '../hooks/redux'
+import { LatLngTuple } from 'leaflet'
 
 const Map = () => {
-  const firstRoute = routes[0]
-  const position = firstRoute?.points[0]
+  const selectedRouteId = useAppSelector((state) => state.map.selectedRouteId)
+  const selectedRouteWaypoints = useAppSelector((state) => state.map.routesDetails
+    .find(({ id }) => id === selectedRouteId))
+    ?.waypoints
 
-  console.log({firstRoute, position, routes})
+  const selectedRoutePoly = useAppSelector((state) => state.map.selectedRoutePolyline)
 
+  const defaultCenter: LatLngTuple = [59.9386, 30.3141]
+
+  const center = selectedRouteWaypoints?.[0] as LatLngTuple || defaultCenter
+  
   return (
     <MapContainer
       style={{ height: '100vh', flex: 1 }}
-      center={position}
+      center={center}
       zoom={16}
       maxZoom={18}
       scrollWheelZoom={true}
-      //detectRetina={true}
     >
+      <MoveCenter polyline={selectedRoutePoly}/>
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        //tileSize={512}
-        //zoomOffset={-1}
         detectRetina={true}
       />
-      {/* TODO: routeLayer */}
-      <RouteLine route={firstRoute} />
+      <RouteLine
+        waypoints={selectedRouteWaypoints}
+        polyline={selectedRoutePoly}
+      />
     </MapContainer>
   )
 }

@@ -16,6 +16,7 @@ module.exports = {
     ],
     'indent': ['error', 2],
     //'linebreak-style': ['error', 'unix'],
+    'object-curly-spacing': ['error', 'always'],
     'quotes': ['error', 'single'],
     'semi': ['error', 'never']
   },

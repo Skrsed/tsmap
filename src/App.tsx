@@ -1,9 +1,11 @@
 import './App.css'
 import Map from './components/Map'
+import Menu from './components/Menu'
 
 const App = () => {
-   return (
+  return (
     <>
+      <Menu/>
       <Map />
     </>
   )

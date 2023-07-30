@@ -1,17 +1,26 @@
 import {
   Marker,
   Polyline
-  // Popup
 } from 'react-leaflet'
+import { LatLng } from 'leaflet'
 
-const RouteLine = ({route}) => {
-  const {name, points, polyline} = route
+interface Props {
+  waypoints?: number[][],
+  polyline?: number[][] | null
+}
+
+const RouteLine = ({ waypoints, polyline }: Props) => {
+  if (!waypoints || !polyline) return
+  
+  console.log({ waypoints, polyline })
+
+  const reversed = polyline.map(([lng, lat]) => new LatLng(lat, lng))
 
   return (
     <>
-      <Polyline pathOptions={{ color: 'lime' }} positions={polyline} />
+      <Polyline pathOptions={{ color: 'lime' }} positions={reversed} />
       {
-        points.map(([lat, lng], key) => {
+        waypoints?.map(([lat, lng], key) => {
           return <Marker key={key} position={[lat, lng]} />
         })
       }
