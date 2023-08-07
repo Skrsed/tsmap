@@ -1,16 +1,16 @@
 import { call, put, takeLatest, select } from 'redux-saga/effects'
-import { selectRoute, fetchedPolyline, failFetchedPolyline, setIsLoading } from '../slices/map'
+import { 
+  selectRoute,
+  fetchedPolyline,
+  failFetchedPolyline,
+  RouteDetails,
+  setIsLoading
+} from '../slices/map'
 import { getPolyline } from '../api/OSRM'
 import { RouteResults } from 'osrm'
 import { AxiosResponse } from 'axios'
 import { PayloadAction } from '@reduxjs/toolkit'
 import { RootState } from '../store'
-
-interface RouteDetails {
-  id: string,
-  name: string,
-  waypoints: number[][]
-}
 
 const getRoute = (state: RootState, action: PayloadAction<string>): RouteDetails | undefined =>
   state.map.routesDetails.find(({ id }: {id: string}) => id === action.payload)

@@ -9,16 +9,18 @@ interface Props {
   polyline?: number[][] | null
 }
 
+const pathOptions = {
+  color: 'green'
+}
+
 const RouteLine = ({ waypoints, polyline }: Props) => {
   if (!waypoints || !polyline) return
-  
-  console.log({ waypoints, polyline })
 
   const reversed = polyline.map(([lng, lat]) => new LatLng(lat, lng))
 
   return (
     <>
-      <Polyline pathOptions={{ color: 'lime' }} positions={reversed} />
+      <Polyline pathOptions={pathOptions} positions={reversed} />
       {
         waypoints?.map(([lat, lng], key) => {
           return <Marker key={key} position={[lat, lng]} />

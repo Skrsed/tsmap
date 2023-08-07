@@ -3,7 +3,9 @@ import 'leaflet/dist/leaflet.css'
 import RouteLine from './RouteLine'
 import MoveCenter from './MoveCenter'
 import { useAppSelector } from '../hooks/redux'
-import { LatLngTuple } from 'leaflet'
+import { LatLng, LatLngTuple } from 'leaflet'
+import { defaultLocation } from '../helpers/const'
+import s from './style.module.css'
 
 const Map = () => {
   const selectedRouteId = useAppSelector((state) => state.map.selectedRouteId)
@@ -13,13 +15,11 @@ const Map = () => {
 
   const selectedRoutePoly = useAppSelector((state) => state.map.selectedRoutePolyline)
 
-  const defaultCenter: LatLngTuple = [59.9386, 30.3141]
-
-  const center = selectedRouteWaypoints?.[0] as LatLngTuple || defaultCenter
+  const center = new LatLng(...defaultLocation as LatLngTuple)
   
   return (
     <MapContainer
-      style={{ height: '100vh', flex: 1 }}
+      className={s.mapContainer}
       center={center}
       zoom={16}
       maxZoom={18}

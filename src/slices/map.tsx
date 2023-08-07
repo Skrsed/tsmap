@@ -3,15 +3,17 @@ import mockRoutes from '../mocha/routes'
 import { notification } from 'antd'
 import { v4 as uuidv4 } from 'uuid'
 
-interface MapState {
+export interface MapState {
   selectedRouteId: string | null,
   isLoading: boolean,
-  routesDetails: {
-    id: string,
-    name: string,
-    waypoints: number[][]
-  }[],
+  routesDetails: RouteDetails[],
   selectedRoutePolyline: number[][] | null
+}
+
+export interface RouteDetails {
+  id: string,
+  name: string,
+  waypoints: number[][]
 }
   
 const initialState: MapState = {
@@ -31,6 +33,7 @@ const mapSlice = createSlice({
   name: 'map',
   initialState,
   reducers: {
+    // make type
     fetchedPolyline(state, action) {
       const { payload: { polyline } } = action
 
@@ -48,13 +51,6 @@ const mapSlice = createSlice({
     },
     selectRoute(state, action: PayloadAction<string>) {
       const newSelectedId = action.payload
-
-      if (state.selectedRouteId === newSelectedId) {
-        state.selectedRouteId = null
-        state.selectedRoutePolyline = null
-
-        return
-      }
 
       state.selectedRouteId = newSelectedId
     },

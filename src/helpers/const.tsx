@@ -1,0 +1,1 @@
+export const defaultLocation = [59.9386, 30.3141]

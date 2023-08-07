@@ -1,0 +1,13 @@
+.map-container {
+  height: 100vh;
+  flex: 1;
+}
+
+.route-items {
+  border-right: none !important;
+}
+
+.card {
+  width: 384px;
+  border-radius: 0;
+}
